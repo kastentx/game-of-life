@@ -6,7 +6,7 @@ import {testGrid } from './styles'
 class App extends Component {
   render() {
     return (
-      <div className ="text-center">
+      <div className="text-center">
         <Heading />
         <Grid style={testGrid} />
       </div>
@@ -14,4 +14,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

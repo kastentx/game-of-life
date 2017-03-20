@@ -11,12 +11,14 @@ var styles = {
     display: 'block',
     paddingTop: '18px',
     float: 'left',
-    border: '1px solid black'
+    border: '1px solid black',
+    margin: '1px'
   },
   testGrid: {
     width: '624px',
     margin: '3% auto',
-    textSize: 'large'
+    textSize: 'large',
+    color: '#000'
   }
 }
 
