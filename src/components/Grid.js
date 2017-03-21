@@ -6,24 +6,49 @@ class Grid extends Component {
   constructor(props) {
     super()
     var grid=[]
-    for (var x=0; x<12; x++) {
+    var living=[]
+    for (var row=0; row<12; row++) {
       grid.push([])
-      for (var y=0; y<12; y++) {
-        grid[x].push(<Cell x={x} y={y} onClick={this.handleClick}/>)
+      living.push([])
+      for (var col=0; col<12; col++) {
+        grid[row].push(<Cell row={row} col={col} onClick={this.handleClick}/>)
+        living[row].push('false')
       }
     }
     this.state = {
-      grid: grid
+      grid: grid,
+      living: living
     }
   }
 
-  handleClick(e) {
-    console.log(e.target.getAttribute('x'),e.target.getAttribute('y'))
+  handleClick = (e) => {
+    var row = e.target.dataset.row
+    var col = e.target.dataset.col
+    console.log(row,col)
+
+    var livingGrid = this.state.living
+    livingGrid[row][col] === 'false' ? this.activate(row, col) : this.deactivate(row, col)
     e.target.getAttribute('clicked') === 'true' ? e.target.removeAttribute('clicked') : e.target.setAttribute('clicked','true')
+
+    console.log(livingGrid)
   }
 
-  toggleColor() {
+  activate = (row, col) => {
+    var livingGrid = this.state.living
+    livingGrid[row][col] = 'true'
 
+    this.setState({
+      living: livingGrid
+    })
+  }
+
+  deactivate = (row, col) => {
+    var livingGrid = this.state.living
+    livingGrid[row][col] = 'false'
+
+    this.setState({
+      living: livingGrid
+    })
   }
 
   render () {

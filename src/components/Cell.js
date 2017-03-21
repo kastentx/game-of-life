@@ -3,8 +3,8 @@ import { testCell } from '../styles'
 
 function Cell(props) {
     return (
-      <span style={testCell} x={props.x} y={props.y} className='cell' onClick={props.onClick}>
-      </span>
+      <div style={testCell} data-row={props.row} data-col={props.col} className='cell' onClick={props.onClick}>
+      </div>
     )
   }
 
