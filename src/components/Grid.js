@@ -30,7 +30,7 @@ class Grid extends Component {
     livingGrid[row][col] === 'false' ? this.activate(row, col) : this.deactivate(row, col)
     e.target.getAttribute('clicked') === 'true' ? e.target.removeAttribute('clicked') : e.target.setAttribute('clicked','true')
 
-    console.log(livingGrid)
+    console.log(livingGrid[row][col])
   }
 
   activate = (row, col) => {
