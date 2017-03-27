@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { testGrid } from '../styles'
 import Cell from './Cell'
-import {testFunc, getNeighbors} from '../utils'
+import { getNeighbors } from '../utils'
 
 class Grid extends Component {
   constructor(props) {

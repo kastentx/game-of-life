@@ -17,6 +17,7 @@ export function getNeighbors(row, col, myGrid) {
   row = Number(row)
   col = Number(col)
 
+  // check all 8 potential neighbor locations
   score += checkTop(row, col, myGrid)
   score += checkBottom(row, col, myGrid)
   score += checkLeft(row, col, myGrid)
@@ -25,16 +26,6 @@ export function getNeighbors(row, col, myGrid) {
   score += checkTopRight(row, col, myGrid)
   score += checkBottomLeft(row, col, myGrid)
   score += checkBottomRight(row, col, myGrid)
-  // check all 8 neighbors for life
-
-  //score += grid[row-1][col-1] ? 1 : 0
-  //score += grid[row-1][col] ? 1 : 0
-  //score += grid[row-1][col+1] ? 1 : 0
-  //score += grid[row+1][col-1] ? 1 : 0
-  // score += grid[row+1][col] ? 1 : 0
-  //score += grid[row+1][col+1] ? 1 : 0
-  //score += grid[row][col-1] ? 1 : 0
-  //score += grid[row][col+1] ? 1 : 0
 
   return score
 }
