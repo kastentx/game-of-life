@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { testGrid } from '../styles'
 import Cell from './Cell'
-import {testFunc} from '../utils'
+import {testFunc, getNeighbors} from '../utils'
 
 class Grid extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Grid extends Component {
       life.push([])
       for (var col=0; col<12; col++) {
         gridUI[row].push(<Cell row={row} col={col} onClick={this.handleClick}/>)
-        life[row].push('false')
+        life[row].push(false)
       }
     }
     this.state = {
@@ -26,20 +26,20 @@ class Grid extends Component {
     var row = e.target.dataset.row
     var col = e.target.dataset.col
 
-    // debug msg
-    console.log(row,col,'clicked')
+    // DEBUG MSG
+    // console.log(row,col,'clicked')
 
     var lifeGrid = this.state.life
-    lifeGrid[row][col] === 'false' ? this.activate(row, col) : this.deactivate(row, col)
-    e.target.getAttribute('clicked') === 'true' ? e.target.removeAttribute('clicked') : e.target.setAttribute('clicked','true')
+    lifeGrid[row][col] === false ? this.activate(row, col) : this.deactivate(row, col)
+    e.target.getAttribute('clicked') === 'true' ? e.target.removeAttribute('clicked') : e.target.setAttribute('clicked', 'true')
 
     // wiring in the helper/utility functions..
-    testFunc(this.state.life)
+    if (e.target.getAttribute('clicked') === 'true') console.log(getNeighbors(row,col,this.state.life))
   }
 
   activate = (row, col) => {
     var lifeGrid = this.state.life
-    lifeGrid[row][col] = 'true'
+    lifeGrid[row][col] = true
 
     this.setState({
       life: lifeGrid
@@ -48,7 +48,7 @@ class Grid extends Component {
 
   deactivate = (row, col) => {
     var lifeGrid = this.state.life
-    lifeGrid[row][col] = 'false'
+    lifeGrid[row][col] = false
 
     this.setState({
       life: lifeGrid
