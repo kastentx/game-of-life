@@ -1,16 +1,14 @@
-
-/*
-export function testFunc(lifeGrid) {
+export function advance(lifeGrid) {
+  var newGrid = []
   for (var row=0; row<12; row++) {
+    newGrid.push([])
+
     for (var col=0; col<12; col++) {
-      if (lifeGrid[row][col] === 'true') {
-        console.log(row,col,'is alive')
-      }
+      newGrid[row].push(false)
     }
   }
+  return newGrid
 }
-*/
-
 
 export function getNeighbors(row, col, myGrid) {
   var score = 0
@@ -45,8 +43,6 @@ function checkLeft(row, col, grid) {
 function checkRight(row, col, grid) {
   return col < 11 ? grid[row][col+1] : 0
 }
-
-// breakski
 
 function checkTopLeft(row, col, grid) {
   return col && row ? grid[row-1][col-1] : 0

@@ -1,11 +1,18 @@
-import React from 'react'
-import { testCell } from '../styles'
+import React, { PropTypes } from 'react'
+import { cellStyle } from '../styles'
 
 function Cell(props) {
     return (
-      <div style={testCell} data-row={props.row} data-col={props.col} className='cell' onClick={props.onClick}>
+      <div style={cellStyle} data-row={props.row} data-col={props.col} className='cell' onClick={props.handleClick} >
       </div>
     )
   }
+
+Cell.proptypes = {
+  row: PropTypes.number.isRequired,
+  col: PropTypes.number.isRequired,
+  alive: PropTypes.bool.isRequired,
+  handleClick: PropTypes.func.isRequired
+}
 
 export default Cell

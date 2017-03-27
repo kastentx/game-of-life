@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { testGrid } from '../styles'
 import Cell from './Cell'
+import Controls from './Controls'
+import GridDisplay from './GridDisplay'
 import { getNeighbors } from '../utils'
 
 class Grid extends Component {
@@ -12,7 +13,7 @@ class Grid extends Component {
       gridUI.push([])
       life.push([])
       for (var col=0; col<12; col++) {
-        gridUI[row].push(<Cell row={row} col={col} onClick={this.handleClick}/>)
+        gridUI[row].push(<Cell row={row} col={col} handleClick={this.handleCellClick} alive={false}/>)
         life[row].push(false)
       }
     }
@@ -20,21 +21,46 @@ class Grid extends Component {
       gridUI: gridUI,
       life: life
     }
+
+    this.renderChildren = this.renderChildren.bind(this)
   }
 
-  handleClick = (e) => {
+  handleCellClick = (e) => {
     var row = e.target.dataset.row
     var col = e.target.dataset.col
-
-    // DEBUG MSG
-    // console.log(row,col,'clicked')
-
     var lifeGrid = this.state.life
+
     lifeGrid[row][col] === false ? this.activate(row, col) : this.deactivate(row, col)
-    e.target.getAttribute('clicked') === 'true' ? e.target.removeAttribute('clicked') : e.target.setAttribute('clicked', 'true')
+    // this line is commented out because I'm trying to apply these styles when rendering
+    //e.target.getAttribute('clicked') === 'true' ? e.target.removeAttribute('clicked') : e.target.setAttribute('clicked', 'true')
 
     // wiring in the helper/utility functions..
     if (e.target.getAttribute('clicked') === 'true') console.log(getNeighbors(row,col,this.state.life))
+  }
+
+  renderChildren = (props) => {
+    return React.Children.map(props.children, child => {
+      if (props.lifeGrid[child.props.col][child.props.row] === true) {
+        return React.cloneElement(child, {
+          alive: true
+        })
+      } else {
+        return child
+      }
+    })
+  }
+
+  advance = () => {
+    var newGrid = []
+    for (var row=0; row<12; row++) {
+      newGrid.push([])
+      for (var col=0; col<12; col++) {
+        newGrid[row].push(false)
+      }
+    }
+    this.setState({
+      life: newGrid
+    })
   }
 
   activate = (row, col) => {
@@ -57,8 +83,11 @@ class Grid extends Component {
 
   render () {
     return (
-      <div style={testGrid} className='gridBox'>
-        {this.state.gridUI}
+      <div>
+        <Controls handleClick={this.advance}/>
+        <GridDisplay renderChildren={this.renderChildren} lifeGrid={this.state.life}>
+          {this.state.gridUI}
+        </GridDisplay>
       </div>
     )
   }

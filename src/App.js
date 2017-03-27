@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Heading from './components/Heading'
 import Grid from './components/Grid'
-import {testGrid } from './styles'
+import { testGrid } from './styles'
 
 class App extends Component {
   render() {

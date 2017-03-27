@@ -5,7 +5,7 @@ var styles = {
     margin: '0',
     padding: '10px'
   },
-  testCell: {
+  cellStyle: {
     width: '50px',
     height: '50px',
     display: 'block',
@@ -14,7 +14,7 @@ var styles = {
     border: '1px solid black',
     margin: '1px'
   },
-  testGrid: {
+  gridStyle: {
     width: '624px',
     margin: '3% auto',
     textSize: 'large',
