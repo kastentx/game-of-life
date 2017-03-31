@@ -30,7 +30,6 @@ class Grid extends Component {
     var col = Number(e.target.dataset.col)
     var lifeGrid = this.state.life
     var newGrid = this.state.gridUI
-    var clickedCell = newGrid[row][col]
 
     lifeGrid[row][col] === false ? this.activate(row, col) : this.deactivate(row, col)
     // this line is commented out because I'm trying to apply these styles when rendering
@@ -56,21 +55,23 @@ class Grid extends Component {
   }
 
   advance = () => {
-    var newGrid = []
+    var newGrid = this.state.gridUI
     for (var row=0; row<12; row++) {
-      newGrid.push([])
       for (var col=0; col<12; col++) {
-        newGrid[row].push(false)
+        if (getNeighbors(row,col,this.state.life) < 3)
+          newGrid[row][col] = React.cloneElement(newGrid[row][col], { alive: false })
+
       }
     }
     this.setState({
-      life: newGrid
+      gridUI: newGrid
     })
   }
 
   activate = (row, col) => {
     var lifeGrid = this.state.life
     lifeGrid[row][col] = true
+    console.log(getNeighbors(row,col,lifeGrid))
 
     this.setState({
       life: lifeGrid
