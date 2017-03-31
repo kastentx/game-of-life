@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
-import { cellStyle } from '../styles'
+import { clickStyle, defaultStyle } from '../styles'
 
 function Cell(props) {
     return (
-      <div style={cellStyle} data-row={props.row} data-col={props.col} className='cell' onClick={props.handleClick} >
+      <div style={props.alive ? clickStyle : defaultStyle} data-row={props.row} data-col={props.col} className='cell' onClick={props.handleClick} >
       </div>
     )
   }

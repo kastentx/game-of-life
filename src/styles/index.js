@@ -5,7 +5,7 @@ var styles = {
     margin: '0',
     padding: '10px'
   },
-  cellStyle: {
+  defaultStyle: {
     width: '50px',
     height: '50px',
     display: 'block',
@@ -14,6 +14,17 @@ var styles = {
     border: '1px solid black',
     margin: '1px'
   },
+  clickStyle: {
+    backgroundColor: '#CCC',
+    width: '50px',
+    height: '50px',
+    display: 'block',
+    paddingTop: '18px',
+    float: 'left',
+    border: '1px solid black',
+    margin: '1px'
+  },
+
   gridStyle: {
     width: '624px',
     margin: '3% auto',
