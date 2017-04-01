@@ -24,7 +24,7 @@ export function getNeighbors(row, col, myGrid) {
   score += checkTopRight(row, col, myGrid)
   score += checkBottomLeft(row, col, myGrid)
   score += checkBottomRight(row, col, myGrid)
-
+  
   return score
 }
 
