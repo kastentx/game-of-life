@@ -9,15 +9,14 @@ class Grid extends Component {
     super()
     var gridUI = []
 
-    this.state = {
-      gridUI: gridUI
-    }
-
     for (var row=0; row<12; row++) {
       gridUI.push([])
       for (var col=0; col<12; col++) {
         gridUI[row].push(<Cell row={row} col={col} handleClick={this.handleCellClick} alive={false}/>)
       }
+    }
+    this.state = {
+      gridUI: gridUI
     }
   }
 
@@ -39,10 +38,10 @@ class Grid extends Component {
     var newGrid = this.state.gridUI
     for (var row=0; row<12; row++) {
       for (var col=0; col<12; col++) {
-        if (getNeighbors(row,col,this.state.life) < 2)
+        if (getNeighbors(row,col,this.state.gridUI) < 3)
           newGrid[row][col] = React.cloneElement(newGrid[row][col], { alive: false })
-        else
-          console.log(row,col,'has')
+        // else
+          // what to do with tiles that stay alive?
       }
     }
     this.setState({

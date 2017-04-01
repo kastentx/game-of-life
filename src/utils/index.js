@@ -1,17 +1,17 @@
-export function advance(lifeGrid) {
-  var newGrid = []
+function buildlifeGrid(gridUI) {
+  var lifeGrid = []
   for (var row=0; row<12; row++) {
-    newGrid.push([])
-
+    lifeGrid.push([])
     for (var col=0; col<12; col++) {
-      newGrid[row].push(false)
+      gridUI[row][col].props.alive === true ? lifeGrid[row].push(true) : lifeGrid[row].push(false)
     }
   }
-  return newGrid
+  return lifeGrid
 }
 
-export function getNeighbors(row, col, myGrid) {
+export function getNeighbors(row, col, gridUI) {
   var score = 0
+  var myGrid = buildlifeGrid(gridUI)
   row = Number(row)
   col = Number(col)
 
@@ -24,7 +24,7 @@ export function getNeighbors(row, col, myGrid) {
   score += checkTopRight(row, col, myGrid)
   score += checkBottomLeft(row, col, myGrid)
   score += checkBottomRight(row, col, myGrid)
-  
+
   return score
 }
 
