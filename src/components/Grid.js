@@ -23,16 +23,11 @@ class Grid extends Component {
   handleCellClick = (e) => {
     var row = e.target.dataset.row
     var col = e.target.dataset.col
-    var newGrid = this.state.gridUI
 
-    newGrid[row][col] = newGrid[row][col].props.alive !== true ? React.cloneElement(newGrid[row][col], { alive: true }) : React.cloneElement(newGrid[row][col], { alive: false })
+    this.state.gridUI[row][col].props.alive !== true ? this.activate(row, col) : this.deactivate(row, col)
 
     // display info on clicked cell in console
-    console.log(newGrid[row][col].props)
-
-    this.setState({
-      gridUI: newGrid
-    })
+    console.log(this.state.gridUI[row][col].props)
   }
 
   advance = () => {
