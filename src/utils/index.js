@@ -24,24 +24,8 @@ export function getNeighbors(row, col, gridUI) {
   score += checkTopRight(row, col, myGrid)
   score += checkBottomLeft(row, col, myGrid)
   score += checkBottomRight(row, col, myGrid)
-  if (score > 2 && myGrid[row][col] === true)
-    console.log(row,col,'has at least 3')
-  else if (myGrid[row][col] === true)
-    debugNeighbors(row, col, myGrid, score)
-  return score
-}
 
-function debugNeighbors(row, col, grid, score) {
-  console.log('cell:', row, col)
-  console.log('Top:', checkTop(row, col, grid))
-  console.log('TopRight:', checkTopRight(row, col, grid))
-  console.log('Right:', checkRight(row, col, grid))
-  console.log('BottomRight:', checkBottomRight(row, col, grid))
-  console.log('Bottom:', checkBottom(row, col, grid))
-  console.log('BottomLeft:', checkBottomLeft(row, col, grid))
-  console.log('Left:', checkLeft(row, col, grid))
-  console.log('TopLeft:', checkTopLeft(row, col, grid))
-  console.log('score:', score)
+  return score
 }
 
 function checkTop(row, col, grid) {
@@ -74,4 +58,17 @@ function checkBottomLeft(row, col, grid) {
 
 function checkBottomRight(row, col, grid) {
   return row < 11 && col < 11 ? grid[row+1][col+1] : 0
+}
+
+ export function debugNeighbors(row, col, grid, score) {
+  console.log('cell:', row, col)
+  console.log('Top:', checkTop(row, col, grid))
+  console.log('TopRight:', checkTopRight(row, col, grid))
+  console.log('Right:', checkRight(row, col, grid))
+  console.log('BottomRight:', checkBottomRight(row, col, grid))
+  console.log('Bottom:', checkBottom(row, col, grid))
+  console.log('BottomLeft:', checkBottomLeft(row, col, grid))
+  console.log('Left:', checkLeft(row, col, grid))
+  console.log('TopLeft:', checkTopLeft(row, col, grid))
+  console.log('score:', score)
 }
