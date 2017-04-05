@@ -1,4 +1,5 @@
 var styles = {
+
   AppHeader: {
     backgroundColor: '#222',
     height: '80px',
@@ -29,7 +30,8 @@ var styles = {
     width: '624px',
     margin: '3% auto',
     textSize: 'large',
-    color: '#000'
+    color: '#000',
+    cursor: 'pointer'
   }
 }
 
