@@ -31,16 +31,20 @@ class Grid extends Component {
   }
 
   advance = () => {
-    var markedForDeath = []
+    var toggleList = []
     for (var row in this.state.gridUI) {
       for (var col in this.state.gridUI[row]) {
-        if (this.state.gridUI[row][col].props.alive === true && getNeighbors(row,col,this.state.gridUI) < 3)
-          markedForDeath.push({row: row, col: col})
+        if ((this.state.gridUI[row][col].props.alive === true &&
+         (getNeighbors(row,col,this.state.gridUI) !== 3 && getNeighbors(row,col,this.state.gridUI) !== 2)) ||
+         (this.state.gridUI[row][col].props.alive === false &&
+         getNeighbors(row,col,this.state.gridUI) === 3)) {
+           toggleList.push({row: row, col: col})
+         }
+
       }
     }
-    // once death list has been completed, deactivate the cells from that list
-    markedForDeath.forEach(cell => {
-      this.deactivate(cell.row,cell.col)
+    toggleList.forEach(cell => {
+      this.state.gridUI[cell.row][cell.col].props.alive !== true ? this.activate(cell.row, cell.col) : this.deactivate(cell.row, cell.col)
     })
   }
 
