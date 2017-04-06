@@ -40,7 +40,6 @@ class Grid extends Component {
          getNeighbors(row,col,this.state.gridUI) === 3)) {
            toggleList.push({row: row, col: col})
          }
-
       }
     }
     toggleList.forEach(cell => {
