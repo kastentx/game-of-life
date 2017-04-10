@@ -47,6 +47,11 @@ class Grid extends Component {
     })
   }
 
+  play = () => {
+    // setinterval doesnt work like this in React without managing state
+    var intervalID = setInterval(this.advance(), 500)
+  }
+
   activate = (row, col) => {
     var newGrid = this.state.gridUI
     newGrid[row][col] = React.cloneElement(newGrid[row][col], { alive: true })
@@ -66,7 +71,7 @@ class Grid extends Component {
   render () {
     return (
       <div>
-        <Controls handleClick={this.advance}/>
+        <Controls handleFwdClick={this.advance} handlePlayClick={this.play}/>
         <GridDisplay gridElements={this.state.gridUI}/>
       </div>
     )
