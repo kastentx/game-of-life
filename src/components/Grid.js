@@ -16,7 +16,8 @@ class Grid extends Component {
       }
     }
     this.state = {
-      gridUI: gridUI
+      gridUI: gridUI,
+      intervalID: ''
     }
   }
 
@@ -48,8 +49,11 @@ class Grid extends Component {
   }
 
   play = () => {
-    // setinterval doesnt work like this in React without managing state
-    var intervalID = setInterval(this.advance(), 500)
+    this.state.intervalID = setInterval(() => { this.advance() }, 500)
+  }
+
+  stop = () => {
+    clearInterval(this.state.intervalID)
   }
 
   activate = (row, col) => {
@@ -71,7 +75,7 @@ class Grid extends Component {
   render () {
     return (
       <div>
-        <Controls handleFwdClick={this.advance} handlePlayClick={this.play}/>
+        <Controls handleFwdClick={this.advance} handlePlayClick={this.play} handleStopClick={this.stop}/>
         <GridDisplay gridElements={this.state.gridUI}/>
       </div>
     )

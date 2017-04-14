@@ -9,6 +9,7 @@ function Controls(props) {
         </div>
         <div>
           <button style={{color: 'green', marginTop: '10px'}} onClick={props.handlePlayClick}>Play</button>
+          <button style={{color: 'red', marginTop: '10px'}} onClick={props.handleStopClick}>Stop</button>
         </div>
       </div>
     )
