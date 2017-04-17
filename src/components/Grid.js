@@ -49,7 +49,9 @@ class Grid extends Component {
   }
 
   play = () => {
-    this.state.intervalID = setInterval(() => { this.advance() }, 500)
+    this.setState({
+      intervalID: setInterval(() => { this.advance() }, 500)
+    })
   }
 
   stop = () => {
