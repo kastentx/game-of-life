@@ -16,8 +16,7 @@ class Grid extends Component {
       }
     }
     this.state = {
-      gridUI: gridUI,
-      intervalID: ''
+      gridUI: gridUI
     }
   }
 
@@ -49,13 +48,11 @@ class Grid extends Component {
   }
 
   play = () => {
-    this.setState({
-      intervalID: setInterval(() => { this.advance() }, 500)
-    })
+    this.intervalID = setInterval(() => { this.advance() }, 500)
   }
 
   stop = () => {
-    clearInterval(this.state.intervalID)
+    clearInterval(this.intervalID)
   }
 
   activate = (row, col) => {
