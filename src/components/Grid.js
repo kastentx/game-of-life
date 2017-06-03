@@ -3,10 +3,11 @@ import Cell from './Cell'
 import Controls from './Controls'
 import GridDisplay from './GridDisplay'
 import { getNeighbors } from '../utils'
+import update from 'immutability-helper'
 
 class Grid extends Component {
   constructor(props) {
-    super()
+    super(props)
     var gridUI = []
 
     for (var row=0; row<12; row++) {
@@ -16,7 +17,8 @@ class Grid extends Component {
       }
     }
     this.state = {
-      gridUI: gridUI
+      gridUI: gridUI,
+      gridHistory: []
     }
   }
 
@@ -28,10 +30,17 @@ class Grid extends Component {
 
     // display info on clicked cell in console
     console.log(this.state.gridUI[row][col].props)
+
+    // show history
+    // console.log('history: ' + this.state.gridHistory)
   }
 
   advance = () => {
     var toggleList = []
+    const liveGrid = new Array(this.state.gridUI)
+    console.log(liveGrid)
+
+
     for (var row in this.state.gridUI) {
       for (var col in this.state.gridUI[row]) {
         if ((this.state.gridUI[row][col].props.alive === true &&
@@ -45,6 +54,12 @@ class Grid extends Component {
     toggleList.forEach(cell => {
       this.state.gridUI[cell.row][cell.col].props.alive !== true ? this.activate(cell.row, cell.col) : this.deactivate(cell.row, cell.col)
     })
+  }
+
+  rewind = () => {
+    if (this.state.gridHistory.length === 0) {
+      alert('nothing in the history!!')
+    }
   }
 
   play = () => {
@@ -74,7 +89,7 @@ class Grid extends Component {
   render () {
     return (
       <div>
-        <Controls handleFwdClick={this.advance} handlePlayClick={this.play} handleStopClick={this.stop}/>
+        <Controls handleFwdClick={this.advance} handleRevClick={this.rewind} handlePlayClick={this.play} handleStopClick={this.stop}/>
         <GridDisplay gridElements={this.state.gridUI}/>
       </div>
     )

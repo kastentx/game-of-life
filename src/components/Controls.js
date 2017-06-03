@@ -4,7 +4,7 @@ function Controls(props) {
     return (
       <div className='controls' style={{marginTop: '15px'}}>
         <div>
-          <button style={{color: 'green', marginRight: '15px'}}>Go Back</button>
+          <button style={{color: 'green', marginRight: '15px'}} onClick={props.handleRevClick}>Go Back</button>
           <button style={{color: 'green'}} onClick={props.handleFwdClick}>Go Fwd</button>
         </div>
         <div>
