@@ -8,11 +8,10 @@ import update from 'immutability-helper'
 class Grid extends Component {
   constructor(props) {
     super(props)
-    var myGrid = Array(12).fill(0).map(x => Array(12).fill(0))
 
     this.state = {
-      myGrid: myGrid,
-      gridHistory: []
+      myGrid: Array(12).fill(0).map(x => Array(12).fill(0)),
+      gridHistory: [Array(12).fill(0).map(x => Array(12).fill(0))]
     }
   }
 
@@ -23,7 +22,6 @@ class Grid extends Component {
 
     alive ? this.deactivate(row, col) : this.activate(row, col)
 
-
     // display info on clicked cell in console
     console.log(`row: ${row} col: ${col} alive: ${alive}`)
   }
@@ -31,19 +29,31 @@ class Grid extends Component {
   advance = () => {
     var toggleList = []
     const currGrid = this.state.myGrid.slice()
+    var gridCopy = Array(12).fill(0).map(x => Array(12).fill(0))
 
-    for (var row in currGrid) {
-      for (var col in currGrid[row]) {
-        if ((currGrid[row][col] === 1 &&
-         (getNeighbors(row,col,currGrid) !== 3 && getNeighbors(row,col,currGrid) !== 2)) ||
-         (currGrid[row][col] === 0 &&
-         getNeighbors(row,col,currGrid) === 3)) {
-           toggleList.push({row: row, col: col})
+    currGrid.forEach((row, i) => {
+      row.forEach((cell, j) => {
+        if ((cell === 1 &&
+         (getNeighbors(i,j,currGrid) !== 3 && getNeighbors(i,j,currGrid) !== 2)) ||
+         (cell === 0 &&
+         getNeighbors(i,j,currGrid) === 3)) {
+           toggleList.push({row: i, col: j})
          }
-      }
-    }
-    toggleList.forEach(cell => {
-      currGrid[cell.row][cell.col] === 0 ? this.activate(cell.row, cell.col) : this.deactivate(cell.row, cell.col)
+        // DEEP COPY of current grid
+        gridCopy[i][j] = cell ? 1 : 0
+      })
+    })
+
+    // THIS NEWHISTORY VARIABLE REFLECTS THE UPDATED GRID.. WHY?!?
+    // const oldHistory = this.state.gridHistory.slice()
+    // const newHistory = currGrid.slice()
+
+    this.setState({
+      gridHistory: update(this.state.gridHistory, { $push: [gridCopy] })
+    }, () => {
+      toggleList.forEach(cell => {
+        currGrid[cell.row][cell.col] === 0 ? this.activate(cell.row, cell.col) : this.deactivate(cell.row, cell.col)
+      })
     })
   }
 
