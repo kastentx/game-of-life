@@ -9,9 +9,8 @@ function buildlifeGrid(gridUI) {
   return lifeGrid
 }
 
-export function getNeighbors(row, col, gridUI) {
+export function getNeighbors(row, col, myGrid) {
   var score = 0
-  var myGrid = buildlifeGrid(gridUI)
   row = Number(row)
   col = Number(col)
 
