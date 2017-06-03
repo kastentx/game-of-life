@@ -37,29 +37,29 @@ class Grid extends Component {
          (getNeighbors(i,j,currGrid) !== 3 && getNeighbors(i,j,currGrid) !== 2)) ||
          (cell === 0 &&
          getNeighbors(i,j,currGrid) === 3)) {
-           toggleList.push({row: i, col: j})
+           toggleList.push({ row: i, col: j })
          }
         // DEEP COPY of current grid
         gridCopy[i][j] = cell ? 1 : 0
       })
     })
 
-    // THIS NEWHISTORY VARIABLE REFLECTS THE UPDATED GRID.. WHY?!?
-    // const oldHistory = this.state.gridHistory.slice()
-    // const newHistory = currGrid.slice()
-
     this.setState({
       gridHistory: update(this.state.gridHistory, { $push: [gridCopy] })
-    }, () => {
-      toggleList.forEach(cell => {
-        currGrid[cell.row][cell.col] === 0 ? this.activate(cell.row, cell.col) : this.deactivate(cell.row, cell.col)
-      })
+    })
+
+    toggleList.forEach(cell => {
+      currGrid[cell.row][cell.col] === 0 ? this.activate(cell.row, cell.col) : this.deactivate(cell.row, cell.col)
     })
   }
 
   rewind = () => {
     if (this.state.gridHistory.length === 0) {
       alert('nothing in the history!!')
+    } else {
+      this.setState({
+        myGrid: this.state.gridHistory.pop()
+      })
     }
   }
 
