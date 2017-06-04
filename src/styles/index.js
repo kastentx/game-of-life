@@ -25,10 +25,9 @@ var styles = {
     border: '1px solid black',
     margin: '1px'
   },
-
   gridStyle: {
     width: '624px',
-    margin: '3% auto',
+    margin: '0.5% auto 2%',
     textSize: 'large',
     color: '#000',
     cursor: 'pointer'
