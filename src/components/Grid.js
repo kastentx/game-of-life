@@ -54,13 +54,16 @@ class Grid extends Component {
   }
 
   rewind = () => {
+    var prevState
     if (this.state.gridHistory.length === 0) {
       alert('nothing in the history!!')
+      prevState = Array(12).fill(0).map(x => Array(12).fill(0))
     } else {
-      this.setState({
-        myGrid: this.state.gridHistory.pop()
-      })
+      prevState = this.state.gridHistory.pop()
     }
+    this.setState({
+      myGrid: prevState
+    })
   }
 
   play = () => {
