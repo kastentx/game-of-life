@@ -8,7 +8,6 @@ import update from 'immutability-helper'
 class Grid extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       myGrid: Array(12).fill(0).map(x => Array(12).fill(0)),
       gridHistory: [Array(12).fill(0).map(x => Array(12).fill(0))]
@@ -23,7 +22,7 @@ class Grid extends Component {
     alive ? this.deactivate(row, col) : this.activate(row, col)
 
     // display info on clicked cell in console
-    console.log(`row: ${row} col: ${col} alive: ${alive}`)
+    // console.log(`row: ${row} col: ${col} alive: ${alive}`)
   }
 
   advance = () => {
@@ -43,7 +42,7 @@ class Grid extends Component {
         gridCopy[i][j] = cell ? 1 : 0
       })
     })
-
+    // current state is added to history
     this.setState({
       gridHistory: update(this.state.gridHistory, { $push: [gridCopy] })
     })
@@ -55,9 +54,11 @@ class Grid extends Component {
 
   rewind = () => {
     var prevState
-    if (this.state.gridHistory.length === 0) {
-      alert('nothing in the history!!')
-      prevState = Array(12).fill(0).map(x => Array(12).fill(0))
+
+    if (this.state.gridHistory.length === 1) {
+      prevState = this.state.myGrid
+    } else if (this.state.gridHistory.length === 0) {
+      prevState = this.state.myGrid
     } else {
       prevState = this.state.gridHistory.pop()
     }
