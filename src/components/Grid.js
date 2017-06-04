@@ -8,58 +8,62 @@ import update from 'immutability-helper'
 class Grid extends Component {
   constructor(props) {
     super(props)
-    var gridUI = []
 
-    for (var row=0; row<12; row++) {
-      gridUI.push([])
-      for (var col=0; col<12; col++) {
-        gridUI[row].push(<Cell row={row} col={col} handleClick={this.handleCellClick} alive={false}/>)
-      }
-    }
     this.state = {
-      gridUI: gridUI,
-      gridHistory: []
+      myGrid: Array(12).fill(0).map(x => Array(12).fill(0)),
+      gridHistory: [Array(12).fill(0).map(x => Array(12).fill(0))]
     }
   }
 
   handleCellClick = (e) => {
     var row = e.target.dataset.row
     var col = e.target.dataset.col
+    var alive = Number(e.target.dataset.alive)
 
-    this.state.gridUI[row][col].props.alive !== true ? this.activate(row, col) : this.deactivate(row, col)
+    alive ? this.deactivate(row, col) : this.activate(row, col)
 
     // display info on clicked cell in console
-    console.log(this.state.gridUI[row][col].props)
-
-    // show history
-    // console.log('history: ' + this.state.gridHistory)
+    console.log(`row: ${row} col: ${col} alive: ${alive}`)
   }
 
   advance = () => {
     var toggleList = []
-    const liveGrid = new Array(this.state.gridUI)
-    console.log(liveGrid)
+    const currGrid = this.state.myGrid.slice()
+    var gridCopy = Array(12).fill(0).map(x => Array(12).fill(0))
 
-
-    for (var row in this.state.gridUI) {
-      for (var col in this.state.gridUI[row]) {
-        if ((this.state.gridUI[row][col].props.alive === true &&
-         (getNeighbors(row,col,this.state.gridUI) !== 3 && getNeighbors(row,col,this.state.gridUI) !== 2)) ||
-         (this.state.gridUI[row][col].props.alive === false &&
-         getNeighbors(row,col,this.state.gridUI) === 3)) {
-           toggleList.push({row: row, col: col})
+    currGrid.forEach((row, i) => {
+      row.forEach((cell, j) => {
+        if ((cell === 1 &&
+         (getNeighbors(i,j,currGrid) !== 3 && getNeighbors(i,j,currGrid) !== 2)) ||
+         (cell === 0 &&
+         getNeighbors(i,j,currGrid) === 3)) {
+           toggleList.push({ row: i, col: j })
          }
-      }
-    }
+        // DEEP COPY of current grid
+        gridCopy[i][j] = cell ? 1 : 0
+      })
+    })
+
+    this.setState({
+      gridHistory: update(this.state.gridHistory, { $push: [gridCopy] })
+    })
+
     toggleList.forEach(cell => {
-      this.state.gridUI[cell.row][cell.col].props.alive !== true ? this.activate(cell.row, cell.col) : this.deactivate(cell.row, cell.col)
+      currGrid[cell.row][cell.col] === 0 ? this.activate(cell.row, cell.col) : this.deactivate(cell.row, cell.col)
     })
   }
 
   rewind = () => {
+    var prevState
     if (this.state.gridHistory.length === 0) {
       alert('nothing in the history!!')
+      prevState = Array(12).fill(0).map(x => Array(12).fill(0))
+    } else {
+      prevState = this.state.gridHistory.pop()
     }
+    this.setState({
+      myGrid: prevState
+    })
   }
 
   play = () => {
@@ -71,26 +75,41 @@ class Grid extends Component {
   }
 
   activate = (row, col) => {
-    var newGrid = this.state.gridUI
-    newGrid[row][col] = React.cloneElement(newGrid[row][col], { alive: true })
+    var newGrid = this.state.myGrid.slice()
+    newGrid[row][col] = 1
+
     this.setState({
-      gridUI: newGrid
+      myGrid: newGrid
     })
   }
 
   deactivate = (row, col) => {
-    var newGrid = this.state.gridUI
-    newGrid[row][col] = React.cloneElement(newGrid[row][col], { alive: false })
+    var newGrid = this.state.myGrid.slice()
+    newGrid[row][col] = 0
+
     this.setState({
-      gridUI: newGrid
+      myGrid: newGrid
     })
+  }
+
+  renderGrid = () => {
+    const myState = this.state.myGrid.slice()
+    let gridCells = []
+
+    myState.forEach((row, i) => {
+      gridCells.push([])
+      row.forEach((cell, j) => {
+        gridCells[i][j] = <Cell row={i} col={j} handleClick={this.handleCellClick} alive={cell}/>
+      })
+    })
+    return gridCells
   }
 
   render () {
     return (
       <div>
         <Controls handleFwdClick={this.advance} handleRevClick={this.rewind} handlePlayClick={this.play} handleStopClick={this.stop}/>
-        <GridDisplay gridElements={this.state.gridUI}/>
+        <GridDisplay renderGrid={this.renderGrid}/>
       </div>
     )
   }

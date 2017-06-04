@@ -3,7 +3,7 @@ import { clickStyle, defaultStyle } from '../styles'
 
 function Cell(props) {
     return (
-      <div style={props.alive ? clickStyle : defaultStyle} data-row={props.row} data-col={props.col} className='cell' onClick={props.handleClick} >
+      <div style={props.alive ? clickStyle : defaultStyle} data-row={props.row} data-col={props.col} data-alive={props.alive} className='cell' onClick={props.handleClick} >
       </div>
     )
   }

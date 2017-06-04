@@ -1,17 +1,5 @@
-function buildlifeGrid(gridUI) {
-  var lifeGrid = []
-  for (var row=0; row<12; row++) {
-    lifeGrid.push([])
-    for (var col=0; col<12; col++) {
-      gridUI[row][col].props.alive === true ? lifeGrid[row].push(true) : lifeGrid[row].push(false)
-    }
-  }
-  return lifeGrid
-}
-
-export function getNeighbors(row, col, gridUI) {
+export function getNeighbors(row, col, myGrid) {
   var score = 0
-  var myGrid = buildlifeGrid(gridUI)
   row = Number(row)
   col = Number(col)
 

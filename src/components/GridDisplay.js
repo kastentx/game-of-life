@@ -4,7 +4,7 @@ import { gridStyle } from '../styles'
 function GridDisplay(props) {
   return (
     <div style={gridStyle} className='gridBox'>
-      {props.gridElements}
+      {props.renderGrid()}
     </div>
   )
 }
